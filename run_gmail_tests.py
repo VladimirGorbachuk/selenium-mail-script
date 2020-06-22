@@ -13,7 +13,6 @@ import allure
 class GMailLettersCounting(unittest.TestCase):
 
     def setUp(self):
-        #self.driver=webdriver.Chrome()#TODO:delete this line
         self.driver = webdriver.Remote(
             command_executor=EXECUTOR_HUB,
             desired_capabilities={'browserName': 'chrome', 'javascriptEnabled': True})
@@ -46,7 +45,6 @@ class GMailLettersCounting(unittest.TestCase):
         main_mail_page.enter_search_from_query_and_press_enter(
             f'from: {EMAIL_AUTHOR_TO_FIND}')
         self.num_of_letters = main_mail_page.get_num_of_letters()
-        print(self.num_of_letters) #TODO:used only before using test reporting, only without grid DELETEIT!
     
     @allure.step('write a letter to specific person with quantity of letters')
     def write_letters_to(self):
