@@ -5,16 +5,14 @@ from selenium.webdriver.support.expected_conditions import presence_of_element_l
 import page
 import locators
 import time
-import dotenv
 from private_information import GMAIL_PASSWORD, GMAIL_USERNAME, EXECUTOR_HUB
 
 class GMailLettersCounting(unittest.TestCase):
 
     def setUp(self):
-        #self.driver = webdriver.Remote(
-        #    command_executor=EXECUTOR_HUB,
-        #    desired_capabilities={'browserName': 'chrome', 'javascriptEnabled': True})
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Remote(
+            command_executor=EXECUTOR_HUB,
+            desired_capabilities={'browserName': 'chrome', 'javascriptEnabled': True})
         self.driver.get('https://mail.google.com')
         self.wait = WebDriverWait(self.driver, 100)
 
