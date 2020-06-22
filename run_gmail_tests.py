@@ -5,7 +5,7 @@ from selenium.webdriver.support.expected_conditions import presence_of_element_l
 import page
 import locators
 import time
-from private_information import GMAIL_PASSWORD, GMAIL_USERNAME, EXECUTOR_HUB
+from private_information import GMAIL_PASSWORD, GMAIL_USERNAME, EXECUTOR_HUB, EMAIL_AUTHOR_TO_FIND
 
 class GMailLettersCounting(unittest.TestCase):
 
@@ -38,7 +38,7 @@ class GMailLettersCounting(unittest.TestCase):
     def search_count_letters_from(self):
         main_mail_page = page.MainMailPage(self.driver)
         main_mail_page.enter_search_from_query_and_press_enter(
-            'from: blizzard')
+            f'from: {EMAIL_AUTHOR_TO_FIND}')
         self.num_of_letters = main_mail_page.get_num_of_letters()
         print(self.num_of_letters)
 

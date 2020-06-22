@@ -11,3 +11,4 @@ load_dotenv(dotenv_path)
 GMAIL_USERNAME=os.environ['GMAIL_USERNAME']
 GMAIL_PASSWORD=os.environ['GMAIL_PASSWORD']
 EXECUTOR_HUB=os.environ['EXECUTOR']
+EMAIL_AUTHOR_TO_FIND=os.environ['EMAIL_AUTHOR_TO_FIND']

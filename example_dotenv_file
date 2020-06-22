@@ -1,0 +1,6 @@
+#filename: .env
+#file content should be the following:
+GMAIL_USERNAME=my_username
+GMAIL_PASSWORD=my_password
+EXECUTOR=http://127.0.0.1:4444/wd/hub
+EMAIL_AUTHOR_TO_FIND='Валиахметов Фарит'
