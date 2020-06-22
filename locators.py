@@ -35,6 +35,8 @@ class MainMailPageLocators:
     SEARCH_MAIL_FIELD = (
         By.NAME, 'q')  # TODO need to write from:Farid Valiakhmetov
 
+    ALL_BUTTONS = (By.CSS_SELECTOR, "[role=button]")
+
 
 class MainMailPageSearchResultsLocators:
     '''
@@ -45,3 +47,9 @@ class MainMailPageSearchResultsLocators:
                    "[role=button][src='images/cleardot.gif']") # TODO: NotReadyYet for some cases we will need it to more accurately get number of letters
     #DATE_DROPDOWN = (By.CSS_SELECTOR, "[xmlns='http://www.w3.org/2000/svg']")
     #DATE_DROPDOWN = (By.CSS_SELECTOR, '[data-impression-suffix=ADVANCED_SEARCH_LINK]') #TODO: unfortunately it doesnt work
+
+
+class WriteLetterWindowLocators:
+    SEND_TO_ADDRESS_INPUT = (By.CSS_SELECTOR, "[rows='1'][name='to']")
+    MAIL_THEME_INPUT = (By.CSS_SELECTOR, "[name='subjectbox']")
+    MAIL_MAIN_TEXT = (By.CSS_SELECTOR, "[role='textbox'][g_editable='true']")

@@ -1,5 +1,11 @@
-from locators import LoginPageLocators, PasswordPageLocators, MainMailPageLocators, MainMailPageSearchResultsLocators
+from locators import (LoginPageLocators,
+                      PasswordPageLocators,
+                      MainMailPageLocators,
+                      MainMailPageSearchResultsLocators,
+                      WriteLetterWindowLocators)
+
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 from elements import BasePageElement, BasePageVisibleElements, wait_until_element_is_loaded
 import time #TODO: time module and lines using it should be replaced with wait_until_element_is_loaded
 
@@ -50,9 +56,15 @@ class MainMailPage(BasePage):
             driver=self.driver,
             locator = MainMailPageLocators.SEARCH_MAIL_FIELD
         )
+
         self.span_letter_quantities = BasePageVisibleElements(
             driver = self.driver,
             locator = MainMailPageSearchResultsLocators.SPAN_LETTER_QUANTITY
+        )
+
+        self.buttons = BasePageVisibleElements(
+            driver=self.driver,
+            locator=MainMailPageLocators.ALL_BUTTONS
         )
 
     def enter_search_from_query_and_press_enter(self, query):
@@ -61,7 +73,36 @@ class MainMailPage(BasePage):
     def get_num_of_letters(self):
         
         time.sleep(5) #TODO: should be replaced with wait_until_element_is_loaded()
-        text = self.span_letter_quantities.objs[2].get_attribute("textContent")
-        return text
+        try:
+            text = self.span_letter_quantities.objs[2].get_attribute("textContent")
+            self.num_of_letters = int(text)
+        except IndexError:
+            self.num_of_letters = 0 #this issue found prior to acquiring emails from Valiakhmetov Farit
+        return self.num_of_letters
+
+    def open_write_letter_window(self):
+        '''opens window where we can write letter'''
+        #print(*[[ind, button.get_attribute('innerHTML')] for ind, button in enumerate(self.buttons.objs)], sep='\n')#TODO:DELETE THIS LINE
+        self.buttons.objs[7].click()
+
+class WriteLetterWindow(BasePage):
+    def __init__(self,driver):
+        super().__init__(driver)
+
+        self.send_to_address_input = BasePageElement(driver=self.driver,
+                                                     locator=WriteLetterWindowLocators.SEND_TO_ADDRESS_INPUT)
+        self.mail_theme_input = BasePageElement(driver=self.driver,
+                                                locator=WriteLetterWindowLocators.MAIL_THEME_INPUT)
+        self.mail_main_text = BasePageElement(driver=self.driver,
+                                              locator=WriteLetterWindowLocators.MAIL_MAIN_TEXT)
+
+    def write_letter(self,surname = None,send_to=None, num_of_letters=None):
+        self.send_to_address_input.obj.send_keys(send_to,Keys.ENTER)
+        self.mail_theme_input.obj.send_keys(f'Тестовое задание. {surname}')
+        #comboCtrlEnter = Keys.chord(Keys.CONTROL, Keys.ENTER)
+        self.mail_main_text.obj.send_keys(num_of_letters)
+        ActionChains(self.driver).key_down(Keys.CONTROL).key_down(Keys.ENTER).key_up(Keys.CONTROL).key_up(Keys.CONTROL).perform()
+        time.sleep(5)#TODO:delete!
+
 
 

@@ -28,10 +28,12 @@ class BasePageElement(WebElement):
         
         self.driver = driver
         self.locator = locator
+        self.driver.implicitly_wait(100)
         self.wait = WebDriverWait(self.driver, 100)
 
     @property
     def obj(self):
+        self.driver.implicitly_wait(100)
         self.wait.until(
             presence_of_element_located(self.locator))
         return self.driver.find_element(*self.locator)
@@ -51,6 +53,7 @@ class BasePageVisibleElements(WebElement):
 
     @property
     def objs(self):
+        self.driver.implicitly_wait(100)
         self.wait.until(presence_of_element_located(self.locator))
         elements_visible = [element for element in self.driver.find_elements(*self.locator) if element.is_displayed()]
         return elements_visible

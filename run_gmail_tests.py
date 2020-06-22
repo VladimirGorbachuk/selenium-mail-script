@@ -5,11 +5,12 @@ from selenium.webdriver.support.expected_conditions import presence_of_element_l
 import page
 import locators
 import time
-from private_information import GMAIL_PASSWORD, GMAIL_USERNAME, EXECUTOR_HUB, EMAIL_AUTHOR_TO_FIND
+from private_information import GMAIL_PASSWORD, GMAIL_USERNAME, EXECUTOR_HUB, EMAIL_AUTHOR_TO_FIND, MY_SURNAME, EMAIL_SEND_TO
 
 class GMailLettersCounting(unittest.TestCase):
 
     def setUp(self):
+        #self.driver=webdriver.Chrome()#TODO:delete this line
         self.driver = webdriver.Remote(
             command_executor=EXECUTOR_HUB,
             desired_capabilities={'browserName': 'chrome', 'javascriptEnabled': True})
@@ -20,6 +21,7 @@ class GMailLettersCounting(unittest.TestCase):
         
         self.login()
         self.search_count_letters_from()
+        self.write_letters_to()
         
 
     def tearDown(self):
@@ -40,7 +42,14 @@ class GMailLettersCounting(unittest.TestCase):
         main_mail_page.enter_search_from_query_and_press_enter(
             f'from: {EMAIL_AUTHOR_TO_FIND}')
         self.num_of_letters = main_mail_page.get_num_of_letters()
-        print(self.num_of_letters)
+        print(self.num_of_letters) #TODO:used only before using test reporting, only without grid DELETEIT!
+
+    def write_letters_to(self):
+        main_mail_page = page.MainMailPage(self.driver)
+        main_mail_page.open_write_letter_window()
+        write_letter_window = page.WriteLetterWindow(self.driver)
+        write_letter_window.write_letter(surname = MY_SURNAME, send_to = EMAIL_SEND_TO, num_of_letters=self.num_of_letters)
+
 
 
 if __name__ == "__main__":
