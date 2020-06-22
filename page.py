@@ -7,7 +7,7 @@ from locators import (LoginPageLocators,
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from elements import BasePageElement, BasePageVisibleElements, wait_until_element_is_loaded
-import time #TODO: time module and lines using it should be replaced with wait_until_element_is_loaded
+import time #TODO: time module and lines using it should be replaced with wait_until_element_is_loaded, I use them only because of 2-factor authentification
 
 
 
@@ -82,7 +82,6 @@ class MainMailPage(BasePage):
 
     def open_write_letter_window(self):
         '''opens window where we can write letter'''
-        #print(*[[ind, button.get_attribute('innerHTML')] for ind, button in enumerate(self.buttons.objs)], sep='\n')#TODO:DELETE THIS LINE
         self.buttons.objs[7].click()
 
 class WriteLetterWindow(BasePage):
@@ -99,10 +98,8 @@ class WriteLetterWindow(BasePage):
     def write_letter(self,surname = None,send_to=None, num_of_letters=None):
         self.send_to_address_input.obj.send_keys(send_to,Keys.ENTER)
         self.mail_theme_input.obj.send_keys(f'Тестовое задание. {surname}')
-        #comboCtrlEnter = Keys.chord(Keys.CONTROL, Keys.ENTER)
         self.mail_main_text.obj.send_keys(num_of_letters)
         ActionChains(self.driver).key_down(Keys.CONTROL).key_down(Keys.ENTER).key_up(Keys.CONTROL).key_up(Keys.CONTROL).perform()
-        time.sleep(5)#TODO:delete!
 
 
 
